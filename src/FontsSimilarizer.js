@@ -149,3 +149,5 @@ class FontsSimilarizer {
     }
 
 }
+
+module.exports = FontsSimilarizer;
