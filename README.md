@@ -5,6 +5,8 @@ Defines visual similarity of fonts and calculates CSS properties for better simi
 ```
 npm i fonts-similarizer
 ```
+Note: If you get `node-gyp rebuild` errors try installing [Canvas Dependencies](https://www.npmjs.com/package/canvas#installation)
+
 # Usage
 
 ```js
