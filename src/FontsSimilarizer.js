@@ -21,14 +21,14 @@ class FontsSimilarizer {
             let avgSimilaritySum = 0;
             let avgSimilarityWeightSum = 0;
 
-            for (let symbol in this._letterFrequency) {
-                if (this._letterFrequency.hasOwnProperty(symbol)) {
-                    let symbolSimilarity = visualSimilarity(this._baseFont, this._similarFont, symbol, this._getScale());
-                    let weight = this._letterFrequency[symbol];
+            for (let symbol of this._baseFont.glyphNames.names.slice(0, 44)) {
+                    if (this._similarFont.glyphNames.names.indexOf(symbol) !== -1 && this._ignoredSymbols.indexOf(symbol) === -1) {
+                        let symbolSimilarity = visualSimilarity(this._baseFont, this._similarFont, symbol, this._getScale());
+                        let weight = this._letterFrequency[symbol] || 1;
 
-                    avgSimilaritySum += symbolSimilarity * weight;
-                    avgSimilarityWeightSum += weight;
-                }
+                        avgSimilaritySum += symbolSimilarity * weight;
+                        avgSimilarityWeightSum += weight;
+                    }
             }
 
             let similarity = avgSimilaritySum / avgSimilarityWeightSum;
