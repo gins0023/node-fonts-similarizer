@@ -13,6 +13,8 @@ class FontsSimilarizer {
         this._baseFont = opentype.loadSync(baseFont);
         this._similarFont = opentype.loadSync(similarFont);
         this._letterFrequency = config.defaultLetterFrequency;
+        this._ignoredSymbols = ['.notdef', '.null', 'nonmarkingreturn', 'space'];
+        this._scale = 1;
     }
 
     getVisualSimilarity() {
