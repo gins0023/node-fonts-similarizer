@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const opentype = require('opentype.js');
 const shuffle = require('shuffle-array');
 
@@ -13,8 +14,11 @@ class FontsSimilarizer {
         this._baseFont = opentype.loadSync(baseFont);
         this._similarFont = opentype.loadSync(similarFont);
         this._letterFrequency = config.defaultLetterFrequency;
-        this._ignoredSymbols = ['.notdef', '.null', 'nonmarkingreturn', 'space'];
         this._scale = 1;
+    }
+
+    isSymbolAlphaNumeric(symbol) {
+        return RegExp(/^[a-z0-9]{1}$/i).test(symbol);
     }
 
     getVisualSimilarity() {
@@ -23,8 +27,19 @@ class FontsSimilarizer {
             let avgSimilaritySum = 0;
             let avgSimilarityWeightSum = 0;
 
-            for (let symbol of this._baseFont.glyphNames.names.slice(0, 44)) {
-                    if (this._similarFont.glyphNames.names.indexOf(symbol) !== -1 && this._ignoredSymbols.indexOf(symbol) === -1) {
+            let baseSymbols = this._baseFont.glyphNames.names;
+            let similarSymbols = this._similarFont.glyphNames.names;
+            let symbols = _.intersection(baseSymbols, similarSymbols);
+            let defaultSymbol = 'a';
+
+            // Grab first alphanumeric character for stroke comparison
+            symbols.some(symbol => {
+                defaultSymbol = symbol;
+                return this.isSymbolAlphaNumeric(symbol);
+            });
+
+            for (let symbol of symbols) {
+                    if (this._similarFont.glyphNames.names.indexOf(symbol) !== -1 && this.isSymbolAlphaNumeric(symbol)) {
                         let symbolSimilarity = visualSimilarity(this._baseFont, this._similarFont, symbol, this._getScale());
                         let weight = this._letterFrequency[symbol] || 1;
 
@@ -36,7 +51,7 @@ class FontsSimilarizer {
             let similarity = avgSimilaritySum / avgSimilarityWeightSum;
 
             // stroke weight correction (30%)
-            let strokeSymbolSimilarity = visualStrokeSimilarity(this._baseFont, this._similarFont, this._getScale());
+            let strokeSymbolSimilarity = visualStrokeSimilarity(this._baseFont, this._similarFont, this._getScale(), defaultSymbol);
 
             this._visualSimilarity = similarity * 0.7 + strokeSymbolSimilarity * 0.3;
 

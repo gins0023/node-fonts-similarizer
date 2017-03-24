@@ -79,10 +79,8 @@ const visualSimilarity = (baseFont, similarFont, symbol, scale) => {
     return getMatrixSimilarity(baseFontMatrixData, similarFontMatrixData);
 };
 
-const visualStrokeSimilarity = (baseFont, similarFont, scale) => {
+const visualStrokeSimilarity = (baseFont, similarFont, scale, symbol) => {
     const similarFontSize = Math.round(config.fontSize * scale);
-    const symbol = 'i';
-
     const position = getPosition(baseFont, similarFont, config.fontSize, similarFontSize, symbol);
 
     let baseFontPath = baseFont.getPath(symbol, position.offsetX, position.offsetY, config.fontSize);

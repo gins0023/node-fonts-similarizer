@@ -1,15 +1,16 @@
 {
-    "name": "fonts-similarizer",
-    "description": "Defines visual similarity of fonts and calculates CSS properties for better similarity",
-    "version": "0.1.0",
-    "main": "src/FontsSimilarizer.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/shtrihstr/node-fonts-similarizer.git"
-    },
-    "dependencies": {
-        "canvas": "^1.6.2",
-        "opentype.js": "^0.6.9",
-        "shuffle-array": "^1.0.0"
-    }
+  "name": "fonts-similarizer",
+  "description": "Defines visual similarity of fonts and calculates CSS properties for better similarity",
+  "version": "0.1.0",
+  "main": "src/FontsSimilarizer.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shtrihstr/node-fonts-similarizer.git"
+  },
+  "dependencies": {
+    "canvas": "^1.6.2",
+    "lodash": "^4.17.4",
+    "opentype.js": "^0.6.9",
+    "shuffle-array": "^1.0.0"
+  }
 }
